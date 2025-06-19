@@ -1,11 +1,11 @@
-// lib/screens/details_screen.dart
+// lib/widgets/details_modal.dart
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 import 'package:unicorn_stagram/models/photo.dart';
-import 'package:unicorn_stagram/providers/Likes_provider.dart';
-
+import 'package:unicorn_stagram/providers/likes_provider.dart';
+import 'package:unicorn_stagram/providers/theme_provider.dart'; // NOUVEL IMPORT pour le thème !
 
 // Cette classe 'DetailsModal' est mon widget StatefulWidget.
 // Un StatefulWidget, c'est comme un terminal de mission interactive dans Mass Effect :
@@ -71,10 +71,15 @@ class _DetailsModalState extends State<DetailsModal> {
   // La méthode 'build' est le cœur de l'interface utilisateur. C'est ici que je construis l'apparence de ma modale.
   // C'est comme la carte architecturale d'une zone sur une planète.
   Widget build(BuildContext context) {
+    // Je récupère l'état du thème pour adapter les couleurs.
+    // Le terminal adapte ses couleurs à l'environnement.
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
     // Je définis quelques couleurs pour le thème de mon application, inspirées des couleurs de l'arc-en-ciel d'une licorne.
     // C'est ma palette de couleurs personnalisée, comme le choix des teintes pour l'armure de Shepard !
-    final Color unicornPink = Colors.pink.shade200;
-    final Color unicornPurple = Colors.purple.shade200;
+    final Color unicornPink = isDarkMode ? Colors.pink.shade300 : Colors.pink.shade200;
+    final Color unicornPurple = isDarkMode ? Colors.purple.shade300 : Colors.purple.shade200;
 
     // Je commence par un 'Container' qui va définir la taille et la forme générale de ma modale.
     // Je lui donne 90% de la hauteur de l'écran pour qu'il prenne une bonne place.
@@ -83,9 +88,9 @@ class _DetailsModalState extends State<DetailsModal> {
       // J'ajoute une belle décoration avec un fond blanc et des bords arrondis en haut,
       // pour que ça ait l'air "propre" et moderne.
       // C'est comme le design épuré des interfaces de la Citadelle.
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: isDarkMode ? Colors.grey.shade900 : Colors.white, // Adapte la couleur de fond
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(25),
           topRight: Radius.circular(25),
         ),
@@ -108,7 +113,7 @@ class _DetailsModalState extends State<DetailsModal> {
                 width: 40,
                 height: 5,
                 decoration: BoxDecoration(
-                  color: Colors.grey.shade300,
+                  color: isDarkMode ? Colors.grey.shade700 : Colors.grey.shade300, // Adapte la couleur du grippy
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
@@ -128,7 +133,7 @@ class _DetailsModalState extends State<DetailsModal> {
                     // pour qu'elle s'affiche rapidement les prochaines fois. C'est comme les scans de planètes qui se chargent vite.
                     ClipRRect(
                       borderRadius: BorderRadius.circular(15.0),
-                      child: CachedNetworkImage( // N'oublie pas d'importer 'cached_network_image' si ce n'est pas déjà fait !
+                      child: CachedNetworkImage(
                         imageUrl: widget.post.imageUrl,
                         fit: BoxFit.cover,
                       ),
@@ -139,8 +144,10 @@ class _DetailsModalState extends State<DetailsModal> {
                     Text(
                       widget.post.description,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: isDarkMode ? Colors.white : Colors.black), // Adapte la couleur du texte
                     ),
                     const SizedBox(height: 4), // Encore un peu d'espace.
                     // J'affiche le nom de l'auteur, aussi centré mais avec un style plus discret.
@@ -148,7 +155,9 @@ class _DetailsModalState extends State<DetailsModal> {
                     Text(
                       'Par ${widget.post.author}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.grey, fontSize: 14),
+                      style: TextStyle(
+                          color: isDarkMode ? Colors.grey.shade400 : Colors.grey, // Adapte la couleur du texte
+                          fontSize: 14),
                     ),
                     const SizedBox(height: 16), // Et encore de l'espace.
                     // Ici, j'utilise un 'Consumer' de 'Provider' pour interagir avec mon 'LikesProvider'.
@@ -163,10 +172,11 @@ class _DetailsModalState extends State<DetailsModal> {
                         // Son icône (cœur) et son texte ("J'adore !" ou "Liker") changent en fonction de si la photo est aimée ou non.
                         // Les couleurs sont aussi dynamiques !
                         return TextButton.icon(
-                          onPressed: () =>
-                              // Quand on clique, j'appelle la fonction 'toggleLike' de mon 'likesProvider'.
-                              // C'est l'action principale pour aimer ou désaimer la photo.
-                              likesProvider.toggleLike(widget.post.id),
+                          onPressed: () {
+                            // Quand on clique, j'appelle la fonction 'toggleLike' de mon 'likesProvider'.
+                            // C'est l'action principale pour aimer ou désaimer la photo.
+                            likesProvider.toggleLike(widget.post.id);
+                          },
                           icon: Icon(
                             isLiked ? Icons.favorite : Icons.favorite_border, // Cœur plein ou vide.
                             color: isLiked ? Colors.redAccent : unicornPink, // Rouge si aimé, rose si non.
@@ -182,21 +192,23 @@ class _DetailsModalState extends State<DetailsModal> {
                     ),
                     const Divider(height: 30), // Une ligne de séparation pour organiser le contenu.
                     // Le titre de la section des commentaires.
-                    const Text(
+                    Text(
                       "Commentaires",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: isDarkMode ? Colors.white : Colors.black), // Adapte la couleur du titre
                     ),
                     const SizedBox(height: 8), // Petit espace.
                     // Je vérifie si la liste de commentaires est vide.
                     // Si oui, j'affiche un message pour dire qu'il n'y a pas encore de commentaires.
                     // C'est comme dire "Aucun rapport trouvé" si les données manquent.
                     if (_comments.isEmpty)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
                         child: Center(
                           child: Text("Aucun commentaire pour le moment.",
-                              style: TextStyle(color: Colors.grey)),
+                              style: TextStyle(color: isDarkMode ? Colors.grey.shade500 : Colors.grey)), // Adapte la couleur du texte
                         ),
                       )
                     else
@@ -210,7 +222,10 @@ class _DetailsModalState extends State<DetailsModal> {
                               child: const Icon(Icons.person,
                                   color: Colors.white, size: 18), // Une icône de personne blanche.
                             ),
-                            title: Text(comment), // Le commentaire lui-même.
+                            title: Text(
+                              comment,
+                              style: TextStyle(color: isDarkMode ? Colors.white70 : Colors.black87), // Adapte la couleur du commentaire
+                            ),
                           )),
                   ],
                 ),
@@ -236,13 +251,15 @@ class _DetailsModalState extends State<DetailsModal> {
                       onSubmitted: (_) => _publishComment(), // Publie le commentaire quand on appuie sur Entrée.
                       decoration: InputDecoration(
                         hintText: "Ajouter un commentaire...", // Le texte indicatif.
+                        hintStyle: TextStyle(color: isDarkMode ? Colors.grey.shade500 : Colors.grey), // Adapte la couleur du texte d'aide
                         filled: true, // Fond rempli.
-                        fillColor: Colors.grey.shade100, // Couleur de fond.
+                        fillColor: isDarkMode ? Colors.grey.shade800 : Colors.grey.shade100, // Adapte la couleur de fond
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(30.0), // Bords très arrondis.
                           borderSide: BorderSide.none, // Pas de bordure visible.
                         ),
                       ),
+                      style: TextStyle(color: isDarkMode ? Colors.white : Colors.black), // Adapte la couleur du texte saisi
                     ),
                   ),
                   const SizedBox(width: 8), // Un petit espace entre le champ et le bouton.

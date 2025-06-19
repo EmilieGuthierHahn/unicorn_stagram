@@ -1,33 +1,115 @@
+# name: unicorn_stagram
+# C'est le nom de mon projet Flutter. Simple et efficace : "unicorn_stagram" !
+# C'est comme le nom de mon vaisseau spatial, le "Normandy SR-2" !
 name: unicorn_stagram
+
+# description: "A new Flutter project."
+# Une petite description de ce projet. C'est juste pour donner une idée générale de ce que c'est.
+# Un peu comme la phrase d'accroche pour la présentation d'un nouveau modèle de vaisseau.
 description: "A new Flutter project."
-publish_to: 'none' 
+
+# publish_to: 'none'
+# Cette ligne est importante : 'none' signifie que je n'ai pas l'intention de publier ce paquet
+# sur pub.dev (le dépôt de paquets Dart/Flutter). C'est un projet personnel pour le moment !
+# C'est comme un prototype de vaisseau qui n'est pas encore prêt pour la production de masse.
+publish_to: 'none'
+
+# version: 1.0.0+1
+# C'est le numéro de version de mon application. '1.0.0' est la version principale,
+# et '+1' est le numéro de build. Chaque fois que je fais un changement majeur, je mets à jour ça.
+# C'est comme les mises à jour logicielles du Normandy, passant de la version SR-1 à SR-2, par exemple !
 version: 1.0.0+1
 
+# environment:
+# Cette section définit les versions de l'environnement Dart et Flutter avec lesquelles mon projet est compatible.
+# C'est crucial pour assurer que tout fonctionne correctement et éviter les problèmes de compatibilité.
+# Un peu comme s'assurer que les systèmes du Normandy sont compatibles avec les dernières mises à jour de l'Alliance.
 environment:
+  # sdk: ^3.8.1
+  # Ici, je précise la version minimale du SDK Dart. Le '^' signifie "compatible avec cette version et les versions ultérieures mineures".
   sdk: ^3.8.1
 
+# dependencies:
+# C'est la liste de toutes les bibliothèques et paquets externes dont mon projet a besoin pour fonctionner.
+# Pour moi, c'est l'équivalent de tous les modules et systèmes embarqués sur le Normandy :
+# sans eux, le vaisseau ne peut pas décoller ni accomplir ses missions !
 dependencies:
+  # flutter:
+  #   sdk: flutter
+  # Le SDK Flutter lui-même, indispensable pour construire mon application !
+  # C'est la coque et le moteur du Normandy.
   flutter:
     sdk: flutter
+  # cupertino_icons: ^1.0.8
+  # Des icônes de style iOS. Toujours utile pour avoir un look soigné, même si je développe principalement pour Android.
+  # Comme les petites icônes sur l'interface de l'EDI.
   cupertino_icons: ^1.0.8
+  # faker: ^2.2.0
+  # Une bibliothèque pour générer des fausses données. Super pratique pour les tests ou le développement sans API réelle.
+  # C'est un peu comme les simulations d'entraînement que Shepard peut faire sur le simulateur de combat.
   faker: ^2.2.0
+  # http: ^1.2.1
+  # Un paquet pour faire des requêtes HTTP de base. Bien que j'utilise Dio, c'est toujours bon d'avoir ça en secours.
+  # Le protocole de communication standard, en cas de panne des systèmes avancés.
   http: ^1.2.1
+  # json_annotation: ^4.9.0
+  # Utilisé avec `json_serializable` pour m'aider à convertir facilement des objets Dart en JSON et vice-versa.
+  # C'est mon décodeur de données galactique, pour comprendre les formats d'informations des différentes espèces.
   json_annotation: ^4.9.0
+  # provider: ^6.1.2
+  # Un paquet essentiel pour la gestion d'état dans Flutter. Il me permet de partager des données entre les widgets
+  # de manière efficace et propre. C'est le réseau de données interne du Normandy, qui connecte tous les terminaux.
   provider: ^6.1.2
+  # cached_network_image: ^3.3.1
+  # Pour afficher des images depuis le réseau et les mettre en cache. Ça rend l'application plus rapide et fluide.
+  # Comme le système de cache de données du Normandy qui accélère l'affichage des cartes stellaires déjà visitées.
   cached_network_image: ^3.3.1
+  # google_fonts: ^6.2.1
+  # Pour utiliser facilement des polices Google dans mon application. Pour un look unique !
+  # C'est comme le choix de la typographie pour les affichages du pont de navigation.
   google_fonts: ^6.2.1
+  # dio: ^5.4.3+1
+  # Mon client HTTP préféré ! Plus puissant et flexible que le paquet `http` de base.
+  # C'est mon canon à masse amélioré pour les requêtes API, précis et efficace !
   dio: ^5.4.3+1
+  # flutter_dotenv: ^5.2.1
+  # Pour charger des variables d'environnement depuis un fichier `.env`. Idéal pour cacher mes clés API !
+  # C'est ma boîte noire sécurisée pour les informations ultra-secrètes, loin des regards indiscrets !
   flutter_dotenv: ^5.2.1
 
+# dev_dependencies:
+# Ces dépendances ne sont utilisées que pendant le développement de l'application, pas dans la version finale.
+# Ce sont mes outils de maintenance et de diagnostic à bord du Normandy.
 dev_dependencies:
+  # flutter_test:
+  #   sdk: flutter
+  # Pour écrire des tests unitaires et de widgets. Indispensable pour s'assurer que tout fonctionne comme prévu.
+  # Les simulateurs d'entraînement pour tester les systèmes avant une vraie mission.
   flutter_test:
     sdk: flutter
+  # json_serializable: ^6.8.0
+  # C'est un "code generator" qui travaille avec `json_annotation`. Il génère le code
+  # pour sérialiser/désérialiser JSON automatiquement. Grosse économie de temps !
+  # C'est l'EDI qui fait les calculs complexes à ma place, générant les rapports automatiquement.
   json_serializable: ^6.8.0
+  # flutter_lints: ^5.0.0
+  # Des règles de linting pour m'aider à écrire du code propre et cohérent.
+  # C'est mon protocole de communication standard, qui assure que mon code respecte les normes N7.
   flutter_lints: ^5.0.0
 
+# flutter:
+# Cette section est spécifique à Flutter.
 flutter:
+  # uses-material-design: true
+  # Je déclare que mon application utilise Material Design, le style de Google.
+  # C'est l'interface utilisateur de base, le standard pour une bonne ergonomie.
   uses-material-design: true
 
+  # assets:
+  # Je liste ici tous les "assets" (ressources) que mon application va utiliser, comme des images ou des fichiers.
+  # C'est l'inventaire de mon vaisseau : ce que j'emporte à bord.
   assets:
+    # - .env
+    # Et je dis à Flutter d'inclure mon fichier `.env` comme asset, pour que `flutter_dotenv` puisse le lire.
+    # C'est le dossier confidentiel contenant les informations de configuration de ma mission.
     - .env
-
